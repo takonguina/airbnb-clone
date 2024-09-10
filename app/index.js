@@ -37,6 +37,7 @@ export default function App() {
       setError("Password missing");
       return;
     }
+    setIsLoading(true);
 
     try {
       const response = await axios.post(apiUrl, {
@@ -44,8 +45,10 @@ export default function App() {
         password: password,
       });
       Alert.alert("Connected");
+      setIsLoading(false);
     } catch (error) {
       setError(error.response.data.error);
+      setIsLoading(false);
       console.log(error.response.data.error);
     }
   };
@@ -111,7 +114,7 @@ export default function App() {
         {error && <Text style={{ color: "red" }}>{error}</Text>}
       </View>
       {isLoading ? (
-        <ActivityIndicator />
+        <ActivityIndicator style={{ marginBottom: 120 }} />
       ) : (
         <View style={styles.connexionFooter}>
           <Pressable style={styles.connexionButton} onPress={handleSignin}>
@@ -152,6 +155,7 @@ const styles = StyleSheet.create({
     marginTop: 70,
   },
   inputContainer: {
+    alignItems: "center",
     gap: 40,
   },
   connexionFooter: {

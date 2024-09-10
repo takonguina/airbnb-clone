@@ -30,7 +30,6 @@ export default function App() {
 
   const handleSignin = async () => {
     const apiUrl = `${process.env.EXPO_PUBLIC_API_URL}/sign_up`;
-
     setError(null);
 
     if (!email) {
@@ -50,6 +49,7 @@ export default function App() {
       setError("Passwords are not the same");
       return;
     }
+    setIsLoading(true);
 
     try {
       const response = await axios.post(apiUrl, {
@@ -58,9 +58,11 @@ export default function App() {
         description: description,
         password: password,
       });
-      Alert.alert("Connected");
+      setIsLoading(false);
+      Alert.alert("Join !");
     } catch (error) {
       setError(error.response.data.error);
+      setIsLoading(false);
       console.log(error.response.data.error);
     }
   };
@@ -172,10 +174,12 @@ export default function App() {
             />
           )}
         </View>
-        {error && <Text style={{ color: "red" }}>{error}</Text>}
+        {error && (
+          <Text style={{ color: "red", marginBottom: 20 }}>{error}</Text>
+        )}
       </View>
       {isLoading ? (
-        <ActivityIndicator />
+        <ActivityIndicator style={styles.connexionFooter} />
       ) : (
         <View style={styles.connexionFooter}>
           <Pressable style={styles.connexionButton} onPress={handleSignin}>
@@ -216,6 +220,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   inputContainer: {
+    alignItems: "center",
     gap: 40,
   },
   connexionFooter: {
