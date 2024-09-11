@@ -1,6 +1,6 @@
-import { Tabs } from "expo-router";
 import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
+import { Tabs } from "expo-router";
 
 export default AppLayout = () => {
   return (
@@ -9,28 +9,28 @@ export default AppLayout = () => {
         name="(home)"
         options={{
           headerShown: false,
-          title: "Home",
           tabBarIcon: ({ color }) => (
-            <Entypo name="home" size={24} color={color} />
+            <Entypo color={color} name="home" size={24} />
           ),
+          title: "Home",
         }}
       />
       <Tabs.Screen
         name="map"
         options={{
-          title: "Map",
           tabBarIcon: ({ color }) => (
-            <Entypo name="map" size={24} color={color} />
+            <Entypo color={color} name="map" size={24} />
           ),
+          title: "Map",
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
           tabBarIcon: ({ color }) => (
-            <Feather name="user" size={20} color={color} />
+            <Feather color={color} name="user" size={20} />
           ),
+          title: "Profile",
         }}
       />
     </Tabs>

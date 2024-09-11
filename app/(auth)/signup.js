@@ -1,4 +1,9 @@
+import Entypo from "@expo/vector-icons/Entypo";
+import axios from "axios";
+import Constants from "expo-constants";
+import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -12,12 +17,8 @@ import {
   TextInput,
   View,
 } from "react-native";
-import Constants from "expo-constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import Entypo from "@expo/vector-icons/Entypo";
-import { useState } from "react";
-import axios from "axios";
-import { router } from "expo-router";
+
 import logo from "../../assets/airbnb-logo.png";
 
 export default function App() {
@@ -55,10 +56,10 @@ export default function App() {
 
     try {
       const response = await axios.post(apiUrl, {
-        email: email,
-        username: username,
         description: description,
+        email: email,
         password: password,
+        username: username,
       });
       setIsLoading(false);
       Alert.alert("Join !");
@@ -70,7 +71,7 @@ export default function App() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ backgroundColor: "white", flex: 1 }}>
       <KeyboardAwareScrollView
         contentContainerStyle={[
           styles.container,
@@ -87,91 +88,91 @@ export default function App() {
         </View>
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Email"
             autoCapitalize="none"
             onChangeText={(text) => {
               setEmail(text);
             }}
+            placeholder="Email"
             style={styles.input}
           />
           <TextInput
-            placeholder="Username"
             autoCapitalize="none"
             onChangeText={(text) => {
               setUsername(text);
             }}
+            placeholder="Username"
             style={styles.input}
           />
           <TextInput
-            placeholder="Description"
             autoCapitalize="none"
+            multiline
             onChangeText={(text) => {
               setDescription(text);
             }}
-            multiline
+            placeholder="Description"
             style={styles.inputDescription}
           />
           <View>
             <TextInput
-              placeholder="Password"
+              autoCapitalize="none"
               onChangeText={(text) => {
                 setPassword(text);
               }}
+              placeholder="Password"
               secureTextEntry={!showPassword}
-              autoCapitalize="none"
               style={styles.input}
             />
             {showPassword ? (
               <Entypo
-                name="eye"
-                size={24}
                 color="black"
-                style={styles.eyeIcon}
+                name="eye"
                 onPress={() => {
                   setShowPassword(!showPassword);
                 }}
+                size={24}
+                style={styles.eyeIcon}
               />
             ) : (
               <Entypo
-                name="eye-with-line"
-                size={24}
                 color="black"
-                style={styles.eyeIcon}
+                name="eye-with-line"
                 onPress={() => {
                   setShowPassword(!showPassword);
                 }}
+                size={24}
+                style={styles.eyeIcon}
               />
             )}
           </View>
           <View>
             <TextInput
-              placeholder="Confirm password"
+              autoCapitalize="none"
               onChangeText={(text) => {
                 setConfirmPassword(text);
               }}
+              placeholder="Confirm password"
               secureTextEntry={!showPassword}
-              autoCapitalize="none"
               style={styles.input}
             />
             {showPassword ? (
               <Entypo
-                name="eye"
-                size={24}
                 color="black"
-                style={styles.eyeIcon}
+                name="eye"
                 onPress={() => {
                   setShowPassword(!showPassword);
                 }}
+                size={24}
+                style={styles.eyeIcon}
               />
             ) : (
               <Entypo
-                name="eye-with-line"
-                size={24}
                 color="black"
-                style={styles.eyeIcon}
+                name="eye-with-line"
                 onPress={() => {
                   setShowPassword(!showPassword);
                 }}
+                size={24}
+                style={styles.eyeIcon}
               />
             )}
           </View>
@@ -183,7 +184,7 @@ export default function App() {
           <ActivityIndicator style={styles.connexionFooter} />
         ) : (
           <View style={styles.connexionFooter}>
-            <Pressable style={styles.connexionButton} onPress={handleSignin}>
+            <Pressable onPress={handleSignin} style={styles.connexionButton}>
               <Text
                 style={[styles.greyText, { fontSize: 16, fontWeight: "bold" }]}
               >
@@ -209,76 +210,76 @@ const windowWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   //****************//
   //   CONTAINERS   //
-  //****************//
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    justifyContent: "space-between",
+  connexionButton: {
     alignItems: "center",
-  },
-  logoContainer: {
-    alignItems: "center",
-    gap: 20,
-    marginTop: 20,
-  },
-  inputContainer: {
-    alignItems: "center",
-    gap: 40,
+    borderColor: "#FF5A5E",
+    borderRadius: 50,
+    borderWidth: 3,
+    marginBottom: 20,
+    padding: 15,
+    width: 200,
   },
   connexionFooter: {
     alignItems: "center",
     marginBottom: 50,
   },
-  connexionButton: {
-    width: 200,
+  //****************//
+  connexionType: {
+    color: "#717171",
+    fontSize: 22,
+    fontWeight: "bold",
+  },
+  //****************//
+  container: {
     alignItems: "center",
-    padding: 15,
-    marginBottom: 20,
-    borderColor: "#FF5A5E",
-    borderWidth: 3,
-    borderRadius: 50,
+    backgroundColor: "#fff",
+    flex: 1,
+    justifyContent: "space-between",
+  },
+  //****************//
+  eyeIcon: {
+    position: "absolute",
+    right: 10,
+    top: Platform.OS === "ios" ? "auto" : 10,
   },
   //****************//
   //      TEXTE     //
-  //****************//
-  connexionType: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#717171",
-  },
   greyText: {
     color: "#8F8F8F",
   },
   //****************//
-  //      INPUT     //
-  //****************//
   input: {
-    paddingVertical: 7,
     borderBottomColor: "#FFBAC0",
     borderBottomWidth: 2,
+    paddingVertical: 7,
     width: windowWidth * 0.75,
+  },
+  //****************//
+  //      INPUT     //
+  inputContainer: {
+    alignItems: "center",
+    gap: 40,
   },
   inputDescription: {
     borderColor: "#FFBAC0",
     borderWidth: 2,
     height: 100,
-    width: windowWidth * 0.75,
     padding: 5,
+    width: windowWidth * 0.75,
   },
   //****************//
   //      IMAGE     //
   //****************//
   logo: {
     height: 100,
-    width: 93,
     objectFit: "cover",
+    width: 93,
   },
   //****************//
   //      ICONS     //
-  //****************//
-  eyeIcon: {
-    position: "absolute",
-    right: 10,
-    top: Platform.OS === "ios" ? "auto" : 10,
+  logoContainer: {
+    alignItems: "center",
+    gap: 20,
+    marginTop: 20,
   },
 });
