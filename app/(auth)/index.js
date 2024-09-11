@@ -6,6 +6,7 @@ import {
   Image,
   Platform,
   Pressable,
+  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
@@ -61,84 +62,87 @@ export default function App() {
   };
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={[
-        styles.container,
-        {
-          paddingTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
-        },
-      ]}
-    >
-      <StatusBar style="auto" />
-      <View style={styles.logoContainer}>
-        <Image source={logo} style={styles.logo} />
-        <Text style={styles.connexionType}>Sign in</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Email"
-          autoCapitalize="none"
-          onChangeText={(text) => {
-            setEmail(text);
-          }}
-          style={styles.input}
-        />
-        <View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={[
+          styles.container,
+          {
+            paddingTop:
+              Platform.OS === "android" ? Constants.statusBarHeight : 0,
+          },
+        ]}
+      >
+        <StatusBar style="auto" />
+        <View style={styles.logoContainer}>
+          <Image source={logo} style={styles.logo} />
+          <Text style={styles.connexionType}>Sign in</Text>
+        </View>
+        <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Password"
-            onChangeText={(text) => {
-              setPassword(text);
-            }}
-            secureTextEntry={!showPassword}
+            placeholder="Email"
             autoCapitalize="none"
+            onChangeText={(text) => {
+              setEmail(text);
+            }}
             style={styles.input}
           />
-          {showPassword ? (
-            <Entypo
-              name="eye"
-              size={24}
-              color="black"
-              style={styles.eyeIcon}
-              onPress={() => {
-                setShowPassword(!showPassword);
+          <View>
+            <TextInput
+              placeholder="Password"
+              onChangeText={(text) => {
+                setPassword(text);
               }}
+              secureTextEntry={!showPassword}
+              autoCapitalize="none"
+              style={styles.input}
             />
-          ) : (
-            <Entypo
-              name="eye-with-line"
-              size={24}
-              color="black"
-              style={styles.eyeIcon}
-              onPress={() => {
-                setShowPassword(!showPassword);
-              }}
-            />
-          )}
+            {showPassword ? (
+              <Entypo
+                name="eye"
+                size={24}
+                color="black"
+                style={styles.eyeIcon}
+                onPress={() => {
+                  setShowPassword(!showPassword);
+                }}
+              />
+            ) : (
+              <Entypo
+                name="eye-with-line"
+                size={24}
+                color="black"
+                style={styles.eyeIcon}
+                onPress={() => {
+                  setShowPassword(!showPassword);
+                }}
+              />
+            )}
+          </View>
+          {error && <Text style={{ color: "red" }}>{error}</Text>}
         </View>
-        {error && <Text style={{ color: "red" }}>{error}</Text>}
-      </View>
-      {isLoading ? (
-        <ActivityIndicator style={{ marginBottom: 120 }} />
-      ) : (
-        <View style={styles.connexionFooter}>
-          <Pressable style={styles.connexionButton} onPress={handleSignin}>
+        {isLoading ? (
+          <ActivityIndicator style={{ marginBottom: 120 }} />
+        ) : (
+          <View style={styles.connexionFooter}>
+            <Pressable style={styles.connexionButton} onPress={handleSignin}>
+              <Text
+                style={[styles.greyText, { fontSize: 16, fontWeight: "bold" }]}
+              >
+                Sign in
+              </Text>
+            </Pressable>
             <Text
-              style={[styles.greyText, { fontSize: 16, fontWeight: "bold" }]}
+              onPress={() => {
+                router.navigate("/signup");
+              }}
+              style={styles.greyText}
             >
-              Sign in
+              No account ? Register
             </Text>
-          </Pressable>
-          <Text
-            onPress={() => {
-              router.push("/signup");
-            }}
-            style={styles.greyText}
-          >
-            No account ? Register
-          </Text>
-        </View>
-      )}
-    </KeyboardAwareScrollView>
+          </View>
+        )}
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 }
 const windowWidth = Dimensions.get("window").width;
@@ -156,7 +160,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: "center",
     gap: 20,
-    marginTop: 70,
+    // marginTop: 70,
   },
   inputContainer: {
     alignItems: "center",

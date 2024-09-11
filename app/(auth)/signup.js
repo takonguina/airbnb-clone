@@ -6,6 +6,7 @@ import {
   Image,
   Platform,
   Pressable,
+  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
@@ -69,135 +70,138 @@ export default function App() {
   };
 
   return (
-    <KeyboardAwareScrollView
-      contentContainerStyle={[
-        styles.container,
-        {
-          paddingTop: Platform.OS === "android" ? Constants.statusBarHeight : 0,
-        },
-      ]}
-    >
-      <StatusBar style="auto" />
-      <View style={styles.logoContainer}>
-        <Image source={logo} style={styles.logo} />
-        <Text style={styles.connexionType}>Sign up</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Email"
-          autoCapitalize="none"
-          onChangeText={(text) => {
-            setEmail(text);
-          }}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Username"
-          autoCapitalize="none"
-          onChangeText={(text) => {
-            setUsername(text);
-          }}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Description"
-          autoCapitalize="none"
-          onChangeText={(text) => {
-            setDescription(text);
-          }}
-          multiline
-          style={styles.inputDescription}
-        />
-        <View>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={[
+          styles.container,
+          {
+            paddingTop:
+              Platform.OS === "android" ? Constants.statusBarHeight : 0,
+          },
+        ]}
+      >
+        <StatusBar style="auto" />
+        <View style={styles.logoContainer}>
+          <Image source={logo} style={styles.logo} />
+          <Text style={styles.connexionType}>Sign up</Text>
+        </View>
+        <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Password"
-            onChangeText={(text) => {
-              setPassword(text);
-            }}
-            secureTextEntry={!showPassword}
+            placeholder="Email"
             autoCapitalize="none"
+            onChangeText={(text) => {
+              setEmail(text);
+            }}
             style={styles.input}
           />
-          {showPassword ? (
-            <Entypo
-              name="eye"
-              size={24}
-              color="black"
-              style={styles.eyeIcon}
-              onPress={() => {
-                setShowPassword(!showPassword);
-              }}
-            />
-          ) : (
-            <Entypo
-              name="eye-with-line"
-              size={24}
-              color="black"
-              style={styles.eyeIcon}
-              onPress={() => {
-                setShowPassword(!showPassword);
-              }}
-            />
-          )}
-        </View>
-        <View>
           <TextInput
-            placeholder="Confirm password"
-            onChangeText={(text) => {
-              setConfirmPassword(text);
-            }}
-            secureTextEntry={!showPassword}
+            placeholder="Username"
             autoCapitalize="none"
+            onChangeText={(text) => {
+              setUsername(text);
+            }}
             style={styles.input}
           />
-          {showPassword ? (
-            <Entypo
-              name="eye"
-              size={24}
-              color="black"
-              style={styles.eyeIcon}
-              onPress={() => {
-                setShowPassword(!showPassword);
+          <TextInput
+            placeholder="Description"
+            autoCapitalize="none"
+            onChangeText={(text) => {
+              setDescription(text);
+            }}
+            multiline
+            style={styles.inputDescription}
+          />
+          <View>
+            <TextInput
+              placeholder="Password"
+              onChangeText={(text) => {
+                setPassword(text);
               }}
+              secureTextEntry={!showPassword}
+              autoCapitalize="none"
+              style={styles.input}
             />
-          ) : (
-            <Entypo
-              name="eye-with-line"
-              size={24}
-              color="black"
-              style={styles.eyeIcon}
-              onPress={() => {
-                setShowPassword(!showPassword);
+            {showPassword ? (
+              <Entypo
+                name="eye"
+                size={24}
+                color="black"
+                style={styles.eyeIcon}
+                onPress={() => {
+                  setShowPassword(!showPassword);
+                }}
+              />
+            ) : (
+              <Entypo
+                name="eye-with-line"
+                size={24}
+                color="black"
+                style={styles.eyeIcon}
+                onPress={() => {
+                  setShowPassword(!showPassword);
+                }}
+              />
+            )}
+          </View>
+          <View>
+            <TextInput
+              placeholder="Confirm password"
+              onChangeText={(text) => {
+                setConfirmPassword(text);
               }}
+              secureTextEntry={!showPassword}
+              autoCapitalize="none"
+              style={styles.input}
             />
+            {showPassword ? (
+              <Entypo
+                name="eye"
+                size={24}
+                color="black"
+                style={styles.eyeIcon}
+                onPress={() => {
+                  setShowPassword(!showPassword);
+                }}
+              />
+            ) : (
+              <Entypo
+                name="eye-with-line"
+                size={24}
+                color="black"
+                style={styles.eyeIcon}
+                onPress={() => {
+                  setShowPassword(!showPassword);
+                }}
+              />
+            )}
+          </View>
+          {error && (
+            <Text style={{ color: "red", marginBottom: 20 }}>{error}</Text>
           )}
         </View>
-        {error && (
-          <Text style={{ color: "red", marginBottom: 20 }}>{error}</Text>
-        )}
-      </View>
-      {isLoading ? (
-        <ActivityIndicator style={styles.connexionFooter} />
-      ) : (
-        <View style={styles.connexionFooter}>
-          <Pressable style={styles.connexionButton} onPress={handleSignin}>
+        {isLoading ? (
+          <ActivityIndicator style={styles.connexionFooter} />
+        ) : (
+          <View style={styles.connexionFooter}>
+            <Pressable style={styles.connexionButton} onPress={handleSignin}>
+              <Text
+                style={[styles.greyText, { fontSize: 16, fontWeight: "bold" }]}
+              >
+                Sign up
+              </Text>
+            </Pressable>
             <Text
-              style={[styles.greyText, { fontSize: 16, fontWeight: "bold" }]}
+              onPress={() => {
+                router.navigate("/");
+              }}
+              style={styles.greyText}
             >
-              Sign up
+              Already have an account? Sign in
             </Text>
-          </Pressable>
-          <Text
-            onPress={() => {
-              router.push("/");
-            }}
-            style={styles.greyText}
-          >
-            Already have an account? Sign in
-          </Text>
-        </View>
-      )}
-    </KeyboardAwareScrollView>
+          </View>
+        )}
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
   );
 }
 const windowWidth = Dimensions.get("window").width;
