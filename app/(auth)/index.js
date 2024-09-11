@@ -14,24 +14,24 @@ import {
 import Constants from "expo-constants";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Entypo from "@expo/vector-icons/Entypo";
-import { useState } from "react";
-import axios from "axios";
+import { useState, useContext } from "react";
 import { router } from "expo-router";
+import axios from "axios";
+import logo from "../../assets/airbnb-logo.png";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function App() {
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [description, setDescription] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
 
-  const handleSignin = async () => {
-    const apiUrl = `${process.env.EXPO_PUBLIC_API_URL}/sign_up`;
-    setError(null);
+  const { handleLogin } = useContext(AuthContext);
 
+  const handleSignin = async () => {
+    const apiUrl = `${process.env.EXPO_PUBLIC_API_URL}/log_in`;
+    setError(null);
     if (!email) {
       setError("Email missing");
       return;
@@ -41,25 +41,16 @@ export default function App() {
       setError("Password missing");
       return;
     }
-    if (!confirmPassword) {
-      setError("Confirm password missing");
-      return;
-    }
-    if (password !== confirmPassword) {
-      setError("Passwords are not the same");
-      return;
-    }
     setIsLoading(true);
 
     try {
       const response = await axios.post(apiUrl, {
         email: email,
-        username: username,
-        description: description,
         password: password,
       });
+      Alert.alert("Connected");
       setIsLoading(false);
-      Alert.alert("Join !");
+      console.log(response.data);
     } catch (error) {
       setError(error.response.data.error);
       setIsLoading(false);
@@ -78,11 +69,8 @@ export default function App() {
     >
       <StatusBar style="auto" />
       <View style={styles.logoContainer}>
-        <Image
-          source={require("../assets/airbnb-logo.png")}
-          style={styles.logo}
-        />
-        <Text style={styles.connexionType}>Sign up</Text>
+        <Image source={logo} style={styles.logo} />
+        <Text style={styles.connexionType}>Sign in</Text>
       </View>
       <View style={styles.inputContainer}>
         <TextInput
@@ -92,23 +80,6 @@ export default function App() {
             setEmail(text);
           }}
           style={styles.input}
-        />
-        <TextInput
-          placeholder="Username"
-          autoCapitalize="none"
-          onChangeText={(text) => {
-            setUsername(text);
-          }}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Description"
-          autoCapitalize="none"
-          onChangeText={(text) => {
-            setDescription(text);
-          }}
-          multiline
-          style={styles.inputDescription}
         />
         <View>
           <TextInput
@@ -142,60 +113,26 @@ export default function App() {
             />
           )}
         </View>
-        <View>
-          <TextInput
-            placeholder="Confirm password"
-            onChangeText={(text) => {
-              setConfirmPassword(text);
-            }}
-            secureTextEntry={!showPassword}
-            autoCapitalize="none"
-            style={styles.input}
-          />
-          {showPassword ? (
-            <Entypo
-              name="eye"
-              size={24}
-              color="black"
-              style={styles.eyeIcon}
-              onPress={() => {
-                setShowPassword(!showPassword);
-              }}
-            />
-          ) : (
-            <Entypo
-              name="eye-with-line"
-              size={24}
-              color="black"
-              style={styles.eyeIcon}
-              onPress={() => {
-                setShowPassword(!showPassword);
-              }}
-            />
-          )}
-        </View>
-        {error && (
-          <Text style={{ color: "red", marginBottom: 20 }}>{error}</Text>
-        )}
+        {error && <Text style={{ color: "red" }}>{error}</Text>}
       </View>
       {isLoading ? (
-        <ActivityIndicator style={styles.connexionFooter} />
+        <ActivityIndicator style={{ marginBottom: 120 }} />
       ) : (
         <View style={styles.connexionFooter}>
           <Pressable style={styles.connexionButton} onPress={handleSignin}>
             <Text
               style={[styles.greyText, { fontSize: 16, fontWeight: "bold" }]}
             >
-              Sign up
+              Sign in
             </Text>
           </Pressable>
           <Text
             onPress={() => {
-              router.push("/");
+              router.push("/signup");
             }}
             style={styles.greyText}
           >
-            Already have an account? Sign in
+            No account ? Register
           </Text>
         </View>
       )}
@@ -217,7 +154,7 @@ const styles = StyleSheet.create({
   logoContainer: {
     alignItems: "center",
     gap: 20,
-    marginTop: 20,
+    marginTop: 70,
   },
   inputContainer: {
     alignItems: "center",
@@ -255,13 +192,6 @@ const styles = StyleSheet.create({
     borderBottomColor: "#FFBAC0",
     borderBottomWidth: 2,
     width: windowWidth * 0.75,
-  },
-  inputDescription: {
-    borderColor: "#FFBAC0",
-    borderWidth: 2,
-    height: 100,
-    width: windowWidth * 0.75,
-    padding: 5,
   },
   //****************//
   //      IMAGE     //
