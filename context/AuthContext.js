@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { createContext, useState } from "react";
 
 export const AuthContext = createContext();
@@ -6,10 +7,10 @@ export const AuthProvider = ({ children }) => {
   const [userId, setUserId] = useState("");
   const [userToken, setUserToken] = useState("");
 
-  const handleLogin = (userId, userToken) => {
-    if (userId && userToken) {
-      setUserId(userId);
-      setUserToken(userToken);
+  const handleLogin = (id, token) => {
+    if (id && token) {
+      setUserId(id);
+      setUserToken(token);
     }
   };
 
@@ -19,7 +20,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ userId, userToken, handleLogin }}>
+    <AuthContext.Provider
+      value={{ userId, userToken, handleLogin, handleLogout }}
+    >
       {children}
     </AuthContext.Provider>
   );

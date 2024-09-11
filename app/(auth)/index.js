@@ -48,8 +48,10 @@ export default function App() {
         email: email,
         password: password,
       });
-      Alert.alert("Connected");
+      const { id, token } = response.data;
+      handleLogin(id, token);
       setIsLoading(false);
+
       console.log(response.data);
     } catch (error) {
       setError(error.response.data.error);

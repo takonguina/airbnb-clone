@@ -1,10 +1,25 @@
-import { Slot } from "expo-router";
-import { AuthProvider } from "../context/AuthContext";
+import { router, Slot } from "expo-router";
+import { AuthContext, AuthProvider } from "../context/AuthContext";
+import { useContext, useEffect } from "react";
 
-export const GlobalAppLayout = () => {
+export default GlobalAppLayout = () => {
   return (
     <AuthProvider>
-      <Slot />
+      <NavigationWrapper>
+        <Slot />
+      </NavigationWrapper>
     </AuthProvider>
   );
+};
+
+const NavigationWrapper = ({ children }) => {
+  const { userId, userToken } = useContext(AuthContext);
+  useEffect(() => {
+    if (userId && userToken) {
+      router.replace("/home");
+    } else {
+      router.replace("/");
+    }
+  }, [userId, userToken]);
+  return children;
 };
