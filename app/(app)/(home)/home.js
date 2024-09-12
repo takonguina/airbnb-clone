@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -14,11 +14,11 @@ import {
 import logo from "../../../assets/airbnb-logo.png";
 import RoomPreview from "../../../components/home/roomPreview";
 import Constants from "expo-constants";
-
-const height = Dimensions.get("window").height;
+import LottieView from "lottie-react-native";
 
 export default Home = () => {
   const [rooms, setRooms] = useState([]);
+
   const handleRooms = async () => {
     try {
       const response = await axios.get(
@@ -46,12 +46,17 @@ export default Home = () => {
       </View>
       <View>
         {rooms.length === 0 ? (
-          <ActivityIndicator size={"large"} style={{ marginTop: 300 }} />
+          <LottieView
+            source={require("../../../assets/homeLoading.json")}
+            style={{ width: "100%", height: "100%" }}
+            autoPlay
+            loop
+          />
         ) : (
           <FlatList
             contentContainerStyle={{
               paddingTop: 10,
-              paddingBottom: 100,
+              paddingBottom: 80,
             }}
             data={rooms}
             keyExtractor={(item) => String(item._id)}

@@ -1,6 +1,8 @@
 import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
+import { Text } from "react-native";
 
 export default AppLayout = () => {
   return (
@@ -9,28 +11,48 @@ export default AppLayout = () => {
         name="(home)"
         options={{
           headerShown: false,
-          tabBarIcon: ({ color }) => (
-            <Entypo color={color} name="home" size={24} />
+          tabBarIcon: ({ focused, color }) => (
+            <Entypo name="home" color={focused ? "#FF5A5E" : color} size={24} />
           ),
-          title: "Home",
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={{ color: focused ? "#FF5A5E" : color, fontSize: 12 }}>
+              Home
+            </Text>
+          ),
         }}
       />
       <Tabs.Screen
         name="map"
         options={{
-          tabBarIcon: ({ color }) => (
-            <Entypo color={color} name="map" size={24} />
+          tabBarIcon: ({ focused, color }) => (
+            <FontAwesome
+              name="map-marker"
+              size={24}
+              color={focused ? "#FF5A5E" : color}
+            />
           ),
-          title: "Map",
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={{ color: focused ? "#FF5A5E" : color, fontSize: 12 }}>
+              Around me
+            </Text>
+          ),
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          tabBarIcon: ({ color }) => (
-            <Feather color={color} name="user" size={20} />
+          tabBarIcon: ({ focused, color }) => (
+            <Feather
+              name="user"
+              size={24}
+              color={focused ? "#FF5A5E" : color}
+            />
           ),
-          title: "Profile",
+          tabBarLabel: ({ focused, color }) => (
+            <Text style={{ color: focused ? "#FF5A5E" : color, fontSize: 12 }}>
+              My profile
+            </Text>
+          ),
         }}
       />
     </Tabs>

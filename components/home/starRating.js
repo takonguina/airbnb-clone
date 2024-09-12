@@ -7,9 +7,10 @@ export default StarRating = ({ rating }) => {
     <View style={{ flexDirection: "row" }}>
       {Array.from({ length: totalStars }, (_, index) => (
         <Entypo
+          key={index}
           name="star"
           size={18}
-          // Jaune pour les étoiles pleines, gris pour les étoiles vides
+          // Yellow then grey
           color={index < rating ? "#FFB107" : "#BBBBBB"}
         />
       ))}
