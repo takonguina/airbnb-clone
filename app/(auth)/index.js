@@ -31,7 +31,7 @@ export default function App() {
   const { handleLogin } = useContext(AuthContext);
 
   const handleSignin = async () => {
-    const apiUrl = `${process.env.EXPO_PUBLIC_API_URL}/log_in`;
+    const apiUrl = `${process.env.EXPO_PUBLIC_API_URL}/user/log_in`;
     setError(null);
     if (!email) {
       setError("Email missing");
@@ -52,8 +52,6 @@ export default function App() {
       const { id, token } = response.data;
       handleLogin(id, token);
       setIsLoading(false);
-
-      console.log(response.data);
     } catch (error) {
       setError(error.response.data.error);
       setIsLoading(false);
@@ -68,7 +66,7 @@ export default function App() {
           styles.container,
           {
             paddingTop:
-              Platform.OS === "android" ? Constants.statusBarHeight : 0,
+              Platform.OS === "android" ? Constants.statusBarHeight * 2 : 0,
           },
         ]}
       >
@@ -150,6 +148,7 @@ const windowWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   //****************//
   //   CONTAINERS   //
+  //****************//
   connexionButton: {
     alignItems: "center",
     borderColor: "#FF5A5E",
@@ -163,20 +162,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 50,
   },
-  //****************//
+
   connexionType: {
     color: "#717171",
     fontSize: 22,
     fontWeight: "bold",
   },
-  //****************//
   container: {
     alignItems: "center",
     backgroundColor: "#fff",
     flex: 1,
     justifyContent: "space-between",
   },
-  //****************//
   eyeIcon: {
     position: "absolute",
     right: 10,
@@ -184,10 +181,10 @@ const styles = StyleSheet.create({
   },
   //****************//
   //      TEXTE     //
+  //****************//
   greyText: {
     color: "#8F8F8F",
   },
-  //****************//
   input: {
     borderBottomColor: "#FFBAC0",
     borderBottomWidth: 2,
@@ -196,6 +193,7 @@ const styles = StyleSheet.create({
   },
   //****************//
   //      INPUT     //
+  //****************//
   inputContainer: {
     alignItems: "center",
     gap: 40,
@@ -210,9 +208,9 @@ const styles = StyleSheet.create({
   },
   //****************//
   //      ICONS     //
+  //****************//
   logoContainer: {
     alignItems: "center",
     gap: 20,
-    // marginTop: 70,
   },
 });

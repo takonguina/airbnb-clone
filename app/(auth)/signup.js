@@ -32,7 +32,7 @@ export default function App() {
   const [error, setError] = useState(null);
 
   const handleSignin = async () => {
-    const apiUrl = `${process.env.EXPO_PUBLIC_API_URL}/sign_up`;
+    const apiUrl = `${process.env.EXPO_PUBLIC_API_URL}/user/sign_up`;
     setError(null);
 
     if (!email) {
