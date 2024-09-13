@@ -19,7 +19,7 @@ export default RoomPreview = ({ room }) => {
     <Pressable
       style={styles.previewContainer}
       onPress={() => {
-        router.push("/room");
+        router.navigate("/room");
       }}
     >
       <View>

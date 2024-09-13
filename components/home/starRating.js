@@ -10,7 +10,7 @@ export default StarRating = ({ rating }) => {
           key={index}
           name="star"
           size={18}
-          // Yellow then grey
+          // Yellow stars then grey
           color={index < rating ? "#FFB107" : "#BBBBBB"}
         />
       ))}

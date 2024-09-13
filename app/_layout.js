@@ -15,6 +15,7 @@ export default GlobalAppLayout = () => {
 
 const NavigationWrapper = ({ children }) => {
   const { userId, userToken } = useContext(AuthContext);
+
   useEffect(() => {
     if (userId && userToken) {
       router.replace("/home");

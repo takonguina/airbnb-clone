@@ -11,7 +11,6 @@ import {
   Text,
   View,
 } from "react-native";
-import logo from "../../../assets/airbnb-logo.png";
 import RoomPreview from "../../../components/home/roomPreview";
 import Constants from "expo-constants";
 import LottieView from "lottie-react-native";
@@ -41,9 +40,6 @@ export default Home = () => {
           Platform.OS === "android" ? Constants.statusBarHeight * 2 : 0,
       }}
     >
-      <View style={styles.logoContainer}>
-        <Image source={logo} style={styles.logo} />
-      </View>
       <View>
         {rooms.length === 0 ? (
           <LottieView
