@@ -3,10 +3,15 @@ import Feather from "@expo/vector-icons/Feather";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 import { Text } from "react-native";
+import Header from "../../components/header/header";
 
 export default AppLayout = () => {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        header: () => <Header />,
+      }}
+    >
       <Tabs.Screen
         name="(home)"
         options={{

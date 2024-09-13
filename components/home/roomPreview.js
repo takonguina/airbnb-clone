@@ -19,7 +19,7 @@ export default RoomPreview = ({ room }) => {
     <Pressable
       style={styles.previewContainer}
       onPress={() => {
-        router.navigate("/room");
+        router.navigate(`/room?id=${_id}`);
       }}
     >
       <View>
@@ -63,10 +63,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   previewDescription: {
-    marginVertical: 10,
-    paddingBottom: 10,
     flexDirection: "row",
     maxWidth: width * 0.9,
+    paddingBottom: 10,
+    marginVertical: 10,
     borderBottomColor: "#d3d3d3",
     borderBottomWidth: 1,
   },

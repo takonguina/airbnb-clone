@@ -1,41 +1,22 @@
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import { View, Image, StyleSheet } from "react-native";
-import logo from "../../../assets/airbnb-logo.png";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Header from "../../../components/header/header";
 
 export default HomeLayout = () => {
   return (
     <Stack
-      screenOptions={{
-        header: () => (
-          <View style={styles.logoContainer}>
-            <Image source={logo} style={styles.logo} />
-          </View>
-        ),
-      }}
+    // screenOptions={{
+    //   header: () => <Header />,
+    // }}
     >
-      <Stack.Screen name="home" />
-      <Stack.Screen name="room" options={{ title: "Room" }} />
+      <Stack.Screen name="home" options={{ header: () => <Header /> }} />
+      <Stack.Screen
+        name="room"
+        options={{
+          header: () => <Header goBack />,
+        }}
+      />
     </Stack>
   );
 };
-
-const styles = StyleSheet.create({
-  //****************//
-  //   CONTAINERS   //
-  //****************//
-  logoContainer: {
-    alignItems: "center",
-    paddingBottom: 10,
-    borderBottomColor: "#d3d3d3",
-    borderBottomWidth: 0.5,
-    paddingTop: 50,
-  },
-  //****************//
-  //      IMAGE     //
-  //****************//
-  logo: {
-    height: 32.5,
-    width: 30.5,
-    objectFit: "cover",
-  },
-});
