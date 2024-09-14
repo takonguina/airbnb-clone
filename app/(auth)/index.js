@@ -17,7 +17,7 @@ import {
   View,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
+import TextInputStyled from "../../components/common/textInputStyled";
 import logo from "../../assets/airbnb-logo.png";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -76,14 +76,7 @@ export default function App() {
           <Text style={styles.connexionType}>Sign in</Text>
         </View>
         <View style={styles.inputContainer}>
-          <TextInput
-            autoCapitalize="none"
-            onChangeText={(text) => {
-              setEmail(text);
-            }}
-            placeholder="Email"
-            style={styles.input}
-          />
+          <TextInputStyled setState={setEmail} placeholder="Email" />
           <View>
             <TextInput
               autoCapitalize="none"
