@@ -1,8 +1,9 @@
 import { Dimensions, StyleSheet, TextInput } from "react-native";
 
-export default TextInputStyled = ({ setState, placeholder }) => {
+export default TextInputStyled = ({ setState, placeholder, value }) => {
   return (
     <TextInput
+      value={value}
       autoCapitalize="none"
       onChangeText={(text) => {
         setState(text);
