@@ -34,12 +34,7 @@ export default Home = () => {
   }, []);
 
   return (
-    <SafeAreaView
-      style={{
-        paddingTop:
-          Platform.OS === "android" ? Constants.statusBarHeight * 2 : 0,
-      }}
-    >
+    <SafeAreaView>
       <View>
         {rooms.length === 0 ? (
           <LottieView
@@ -52,7 +47,6 @@ export default Home = () => {
           <FlatList
             contentContainerStyle={{
               paddingTop: 10,
-              paddingBottom: 80,
             }}
             data={rooms}
             keyExtractor={(item) => String(item._id)}
