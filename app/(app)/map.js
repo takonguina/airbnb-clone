@@ -3,6 +3,7 @@ import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { router } from "expo-router";
 
 export default MapPage = () => {
   const [error, setError] = useState();
@@ -68,6 +69,7 @@ export default MapPage = () => {
                 }}
                 title={marker.title}
                 description={marker.description}
+                onPress={() => router.navigate(`/room?id=${marker._id}`)}
               />
             );
           })}
